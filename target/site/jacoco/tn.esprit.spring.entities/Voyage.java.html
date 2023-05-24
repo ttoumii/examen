@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Voyage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ExamThourayaS2</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.entities</a> &gt; <span class="el_source">Voyage.java</span></div><h1>Voyage.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.entities;
+
+
+
+
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+@Entity
+public class Voyage  implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idVoyage;
+	
+
+	long codeVoyage;
+	
+	@Enumerated(EnumType.STRING)
+	private Ville gareDepart;
+	
+	
+	@Enumerated(EnumType.STRING)
+	private Ville gareArrivee;
+	
+	
+	@Temporal(TemporalType.DATE)
+	private Date dateDepart;
+	@Temporal(TemporalType.DATE)
+	private Date dateArrivee;
+	
+	private double heureDepart;
+	
+	private double heureArrivee;
+	
+	@ManyToOne
+	Train train;
+	
+	
+	@ManyToMany
+    public List&lt;Voyageur&gt; mesVoyageurs;
+
+
+	public long getCodeVoyage() {
+<span class="nc" id="L62">		return codeVoyage;</span>
+	}
+
+
+	public void setCodeVoyage(long codeVoyage) {
+<span class="nc" id="L67">		this.codeVoyage = codeVoyage;</span>
+<span class="nc" id="L68">	}</span>
+
+
+	public Long getIdVoyage() {
+<span class="nc" id="L72">		return idVoyage;</span>
+	}
+
+
+	public void setIdVoyage(Long idVoyage) {
+<span class="nc" id="L77">		this.idVoyage = idVoyage;</span>
+<span class="nc" id="L78">	}</span>
+
+
+	public Ville getGareDepart() {
+<span class="nc" id="L82">		return gareDepart;</span>
+	}
+
+
+	public void setGareDepart(Ville gareDepart) {
+<span class="nc" id="L87">		this.gareDepart = gareDepart;</span>
+<span class="nc" id="L88">	}</span>
+
+
+	public Ville getGareArrivee() {
+<span class="nc" id="L92">		return gareArrivee;</span>
+	}
+
+
+	public void setGareArrivee(Ville gareArrivee) {
+<span class="nc" id="L97">		this.gareArrivee = gareArrivee;</span>
+<span class="nc" id="L98">	}</span>
+
+
+	public Date getDateDepart() {
+<span class="nc" id="L102">		return dateDepart;</span>
+	}
+
+
+	public void setDateDepart(Date dateDepart) {
+<span class="nc" id="L107">		this.dateDepart = dateDepart;</span>
+<span class="nc" id="L108">	}</span>
+
+
+	public Date getDateArrivee() {
+<span class="nc" id="L112">		return dateArrivee;</span>
+	}
+
+
+	public void setDateArrivee(Date dateArrivee) {
+<span class="nc" id="L117">		this.dateArrivee = dateArrivee;</span>
+<span class="nc" id="L118">	}</span>
+
+
+	public double getHeureDepart() {
+<span class="nc" id="L122">		return heureDepart;</span>
+	}
+
+
+	public void setHeureDepart(double heureDepart) {
+<span class="nc" id="L127">		this.heureDepart = heureDepart;</span>
+<span class="nc" id="L128">	}</span>
+
+
+	public double getHeureArrivee() {
+<span class="nc" id="L132">		return heureArrivee;</span>
+	}
+
+
+	public void setHeureArrivee(double heureArrivee) {
+<span class="nc" id="L137">		this.heureArrivee = heureArrivee;</span>
+<span class="nc" id="L138">	}</span>
+
+
+	public Train getTrain() {
+<span class="nc" id="L142">		return train;</span>
+	}
+
+
+	public void setTrain(Train train) {
+<span class="nc" id="L147">		this.train = train;</span>
+<span class="nc" id="L148">	}</span>
+
+
+	public List&lt;Voyageur&gt; getMesVoyageurs() {
+<span class="nc" id="L152">		return mesVoyageurs;</span>
+	}
+
+
+	public void setMesVoyageurs(List&lt;Voyageur&gt; mesVoyageurs) {
+<span class="nc" id="L157">		this.mesVoyageurs = mesVoyageurs;</span>
+<span class="nc" id="L158">	}</span>
+
+
+	public Voyage() {
+<span class="nc" id="L162">		super();</span>
+<span class="nc" id="L163">	}</span>
+	
+	
+
+
+    
+
+
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

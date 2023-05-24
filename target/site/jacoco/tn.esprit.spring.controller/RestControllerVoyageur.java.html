@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestControllerVoyageur.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ExamThourayaS2</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.controller</a> &gt; <span class="el_source">RestControllerVoyageur.java</span></div><h1>RestControllerVoyageur.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import tn.esprit.spring.entities.Voyageur;
+import tn.esprit.spring.entities.Train;
+import tn.esprit.spring.entities.Ville;
+import tn.esprit.spring.entities.Voyage;
+import tn.esprit.spring.repository.TrainRepository;
+import tn.esprit.spring.services.IVoyageurService;
+import tn.esprit.spring.services.ITrainService;
+import tn.esprit.spring.services.IVoyageService;
+
+@RestController
+<span class="nc" id="L19">public class RestControllerVoyageur {</span>
+
+
+    @Autowired
+    IVoyageService ivoyageservice;
+
+    @Autowired
+    ITrainService itrainservice;
+
+    @Autowired
+    IVoyageurService iVoyageurservice;
+
+    //http://localhost:8083/SpringMVC/servlet/ajouterVoyage
+    @PostMapping(&quot;/ajouterVoyage&quot;)
+    @ResponseBody
+    public void ajouterGare(@RequestBody Voyage voiture) {
+<span class="nc" id="L35">        ivoyageservice.ajouterVoyage(voiture);</span>
+<span class="nc" id="L36">    }</span>
+
+
+    ////http://localhost:8083/SpringMVC/servlet/ajouterTrain
+    @PostMapping(&quot;/ajouterTrain&quot;)
+    @ResponseBody
+    public void ajouterTrain(@RequestBody Train train) {
+<span class="nc" id="L43">        itrainservice.ajouterTrain(train);</span>
+<span class="nc" id="L44">    }</span>
+
+    ////http://localhost:8083/SpringMVC/servlet/ajouterVoyageur
+    @PostMapping(&quot;/ajouterVoyageur&quot;)
+    @ResponseBody
+    public void ajouterVoyageur(@RequestBody Voyageur Voyageur) {
+<span class="nc" id="L50">        iVoyageurservice.ajouterVoyageur(Voyageur);</span>
+<span class="nc" id="L51">    }</span>
+
+    //http://localhost:8083/SpringMVC/servlet/affecterTrainAVoyage/{idtr}/{idvyg}
+    @PutMapping(value = &quot;/affecterTrainAVoyage/{idtr}/{idvyg}&quot;)
+    //1 1  2 2 3 3 4 4
+    public void affecterTrainAVoyage(@PathVariable(&quot;idtr&quot;) Long idTrain, @PathVariable(&quot;idvyg&quot;) Long idVoyage) {
+<span class="nc" id="L57">        ivoyageservice.affecterTrainAVoyage(idTrain, idVoyage);</span>
+<span class="nc" id="L58">    }</span>
+
+//@PutMapping(value = &quot;/affecterTrainAGare/{idtr}/{idgdpt}/{idgar}&quot;)
+//public void affecterTrainAGare(@PathVariable(&quot;idtr&quot;)Long idTrain, @PathVariable(&quot;idgdpt&quot;)Long idGareDepart,@PathVariable(&quot;idgar&quot;) Long idGareArrivee)
+//{
+//	igareservice.affecterTrainAGare(idTrain,idGareDepart,idGareArrivee);
+//
+//}
+
+    ////http://localhost:8083/SpringMVC/servlet/affecterTrainAVoyageur/1/EZZAHRA/7.45
+    @PutMapping(value = &quot;/affecterTrainAVoyageur/{idc}/{nomgdpt}/{nomgarr}/{heuredept}&quot;)
+    public void affecterTainAVoyageur(@PathVariable(&quot;idc&quot;) Long idVoyageur, @PathVariable(&quot;nomgdpt&quot;) Ville nomGareDepart, @PathVariable(&quot;nomgarr&quot;) Ville nomGareArrivee, @PathVariable(&quot;heuredept&quot;) double heureDepart) {
+<span class="nc" id="L70">        itrainservice.affecterTainAVoyageur(idVoyageur, nomGareDepart, nomGareArrivee, heureDepart);</span>
+<span class="nc" id="L71">    }</span>
+
+    //////URL : http://localhost:8083/SpringMVC/servlet/TrainPlacesLibres/TUNIS
+    @GetMapping(value = &quot;/TrainPlacesLibres/{nomgdpt}&quot;)
+    public int TrainPlacesLibres(@PathVariable(&quot;nomgdpt&quot;) Ville nomGareDepart) {
+<span class="nc" id="L76">        System.out.println(&quot;in controller&quot; + nomGareDepart);</span>
+<span class="nc" id="L77">        return itrainservice.TrainPlacesLibres(nomGareDepart);</span>
+    }
+
+    @RequestMapping(value = &quot;/ListerTrainsIndirects/{nomgdpt}/{nomgarr}&quot;, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List&lt;Train&gt; ListerTrainsIndirects(@PathVariable(&quot;nomgdpt&quot;) Ville nomGareDepart, @PathVariable(&quot;nomgarr&quot;) Ville nomGareArrivee) {
+<span class="nc" id="L82">        return itrainservice.ListerTrainsIndirects(nomGareDepart, nomGareArrivee);</span>
+    }
+
+    @PutMapping(value = &quot;/DesaffecterVoyageursTrain/{nomgdpt}/{heuredept}&quot;)
+    public void DesaffecterVoyageursTrain(@PathVariable(&quot;nomgdpt&quot;) Ville nomGareDepart, @PathVariable(&quot;nomgarr&quot;) Ville nomGareArrivee, @PathVariable(&quot;heuredept&quot;) double heureDepart) {
+<span class="nc" id="L87">        itrainservice.DesaffecterVoyageursTrain(nomGareDepart, nomGareArrivee, heureDepart);</span>
+<span class="nc" id="L88">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

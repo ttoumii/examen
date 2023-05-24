@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Train.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ExamThourayaS2</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.entities</a> &gt; <span class="el_source">Train.java</span></div><h1>Train.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.entities;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Train implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long idTrain;
+
+
+    long codeTrain;
+
+    public long getCodeTrain() {
+<span class="nc" id="L23">        return codeTrain;</span>
+    }
+
+    public void setCodeTrain(long codeTrain) {
+<span class="nc" id="L27">        this.codeTrain = codeTrain;</span>
+<span class="nc" id="L28">    }</span>
+
+    @Enumerated(EnumType.STRING)
+    private etatTrain etat;
+
+    private int nbPlaceLibre;
+
+    public long getIdTrain() {
+<span class="nc" id="L36">        return idTrain;</span>
+    }
+
+    public void setIdTrain(long idTrain) {
+<span class="nc" id="L40">        this.idTrain = idTrain;</span>
+<span class="nc" id="L41">    }</span>
+
+    public etatTrain getEtat() {
+<span class="nc" id="L44">        return etat;</span>
+    }
+
+    public void setEtat(etatTrain etat) {
+<span class="nc" id="L48">        this.etat = etat;</span>
+<span class="nc" id="L49">    }</span>
+
+    public int getNbPlaceLibre() {
+<span class="nc" id="L52">        return nbPlaceLibre;</span>
+    }
+
+    public void setNbPlaceLibre(int nbPlaceLibre) {
+<span class="nc" id="L56">        this.nbPlaceLibre = nbPlaceLibre;</span>
+<span class="nc" id="L57">    }</span>
+
+    public Train() {
+<span class="nc" id="L60">        super();</span>
+<span class="nc" id="L61">    }</span>
+
+    public Train(long idTrain, etatTrain etat, int nbPlaceLibre) {
+<span class="nc" id="L64">        super();</span>
+<span class="nc" id="L65">        this.idTrain = idTrain;</span>
+<span class="nc" id="L66">        this.etat = etat;</span>
+<span class="nc" id="L67">        this.nbPlaceLibre = nbPlaceLibre;</span>
+<span class="nc" id="L68">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

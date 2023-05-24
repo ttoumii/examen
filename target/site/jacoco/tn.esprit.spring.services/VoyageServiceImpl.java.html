@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VoyageServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ExamThourayaS2</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.services</a> &gt; <span class="el_source">VoyageServiceImpl.java</span></div><h1>VoyageServiceImpl.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import tn.esprit.spring.entities.Train;
+import tn.esprit.spring.entities.Voyage;
+import tn.esprit.spring.repository.TrainRepository;
+import tn.esprit.spring.repository.VoyageRepository;
+
+import java.util.List;
+
+@Service
+<span class="nc" id="L14">public class VoyageServiceImpl implements IVoyageService {</span>
+    @Autowired
+    VoyageRepository voyageRepository;
+    @Autowired
+    TrainRepository trainRepository;
+    @Override
+    public void ajouterVoyage(Voyage v) {
+<span class="nc" id="L21">        voyageRepository.save(v);</span>
+<span class="nc" id="L22">    }</span>
+
+    @Override
+    public void modifierVoyage(Voyage v) {
+<span class="nc" id="L26">		voyageRepository.save(v);</span>
+<span class="nc" id="L27">    }</span>
+
+
+    public void affecterTrainAVoyage(Long idTrain, Long idVoyage) {
+
+<span class="nc" id="L32">        Train t = trainRepository.findById(idTrain).get();</span>
+<span class="nc" id="L33">        Voyage v = voyageRepository.findById(idVoyage).get();</span>
+<span class="nc" id="L34">        v.setTrain(t);</span>
+<span class="nc" id="L35">        voyageRepository.save(v);</span>
+<span class="nc" id="L36">    }</span>
+
+    @Override
+    public List&lt;Voyage&gt; recupererAll() {
+<span class="nc" id="L40">        List&lt;Voyage&gt; list = (List&lt;Voyage&gt;) voyageRepository.findAll();</span>
+<span class="nc" id="L41">        return list;</span>
+    }
+
+    @Override
+    public Voyage recupererVoyageParId(long idVoyage) {
+<span class="nc" id="L46">        Voyage v = voyageRepository.findById(idVoyage).orElse(null);</span>
+<span class="nc" id="L47">        return v;</span>
+    }
+
+    @Override
+    public void supprimerVoyage(Voyage v) {
+        //TODO method
+<span class="nc" id="L53">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

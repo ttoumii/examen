@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TrainServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ExamThourayaS2</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.services</a> &gt; <span class="el_source">TrainServiceImpl.java</span></div><h1>TrainServiceImpl.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.services;
+
+import org.springframework.stereotype.Service;
+import tn.esprit.spring.entities.Train;
+import tn.esprit.spring.entities.Ville;
+import tn.esprit.spring.entities.Voyage;
+import tn.esprit.spring.entities.etatTrain;
+import tn.esprit.spring.repository.TrainRepository;
+import tn.esprit.spring.repository.VoyageRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import tn.esprit.spring.repository.VoyageurRepository;
+
+import tn.esprit.spring.entities.Voyageur;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import tn.esprit.spring.entities.Voyageur;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
+
+import org.springframework.scheduling.annotation.Scheduled;
+
+@Service
+<span class="nc" id="L29">public class TrainServiceImpl implements ITrainService {</span>
+
+
+    @Autowired
+    VoyageurRepository VoyageurRepository;
+
+
+    @Autowired
+    TrainRepository trainRepository;
+
+    @Autowired
+    VoyageRepository voyageRepository;
+
+
+    public void ajouterTrain(Train t) {
+
+<span class="nc" id="L45">        trainRepository.save(t);</span>
+<span class="nc" id="L46">    }</span>
+
+    public  int TrainPlacesLibres(Ville nomGareDepart) {
+<span class="nc" id="L49">        int cpt = 0;</span>
+<span class="nc" id="L50">        int occ = 0;</span>
+<span class="nc" id="L51">        List&lt;Voyage&gt; listvoyage = (List&lt;Voyage&gt;) voyageRepository.findAll();</span>
+<span class="nc" id="L52">        System.out.println(&quot;tailee&quot; + listvoyage.size());</span>
+
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        for (int i = 0; i &lt; listvoyage.size(); i++) {</span>
+<span class="nc" id="L55">            System.out.println(&quot;gare&quot; + nomGareDepart + &quot;value&quot; + listvoyage.get(0).getGareDepart());</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">            if (listvoyage.get(i).getGareDepart() == nomGareDepart) {</span>
+<span class="nc" id="L57">                cpt = cpt + listvoyage.get(i).getTrain().getNbPlaceLibre();</span>
+<span class="nc" id="L58">                occ = occ + 1;</span>
+<span class="nc" id="L59">                System.out.println(&quot;cpt &quot; + cpt);</span>
+            } else {
+
+            }
+        }
+<span class="nc" id="L64">        return cpt / occ;</span>
+    }
+
+
+    public List&lt;Train&gt; ListerTrainsIndirects(Ville nomGareDepart, Ville nomGareArrivee) {
+
+<span class="nc" id="L70">        List&lt;Train&gt; lestrainsRes = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L71">        List&lt;Voyage&gt; lesvoyage = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L72">        lesvoyage = (List&lt;Voyage&gt;) voyageRepository.findAll();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        for (int i = 0; i &lt; lesvoyage.size(); i++) {</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (lesvoyage.get(i).getGareDepart() == nomGareDepart) {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                for (int j = 0; j &lt; lesvoyage.size(); j++) {</span>
+<span class="nc bnc" id="L76" title="All 6 branches missed.">                    if (lesvoyage.get(i).getGareArrivee() == lesvoyage.get(j).getGareDepart() &amp; lesvoyage.get(j).getGareArrivee() == nomGareArrivee) {</span>
+<span class="nc" id="L77">                        lestrainsRes.add(lesvoyage.get(i).getTrain());</span>
+<span class="nc" id="L78">                        lestrainsRes.add(lesvoyage.get(j).getTrain());</span>
+
+                    } else {
+
+                    }
+
+                }
+            }
+        }
+
+
+<span class="nc" id="L89">        return lestrainsRes;</span>
+        //
+    }
+
+
+    @Transactional
+    public void affecterTainAVoyageur(Long idVoyageur, Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
+
+
+<span class="nc" id="L98">        System.out.println(&quot;taille test&quot;);</span>
+<span class="nc" id="L99">        Voyageur c = VoyageurRepository.findById(idVoyageur).get();</span>
+<span class="nc" id="L100">        List&lt;Voyage&gt; lesvoyages = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L101">        lesvoyages = voyageRepository.RechercheVoyage(nomGareDepart, nomGareDepart, heureDepart);</span>
+<span class="nc" id="L102">        System.out.println(&quot;taille&quot; + lesvoyages.size());</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        for (int i = 0; i &lt; lesvoyages.size(); i++) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">            if (lesvoyages.get(i).getTrain().getNbPlaceLibre() != 0) {</span>
+<span class="nc" id="L105">                lesvoyages.get(i).getMesVoyageurs().add(c);</span>
+<span class="nc" id="L106">                lesvoyages.get(i).getTrain().setNbPlaceLibre(lesvoyages.get(i).getTrain().getNbPlaceLibre() - 1);</span>
+            } else
+<span class="nc" id="L108">                System.out.print(&quot;Pas de place disponible pour &quot; + VoyageurRepository.findById(idVoyageur).get().getNomVoyageur());</span>
+<span class="nc" id="L109">            voyageRepository.save(lesvoyages.get(i));</span>
+        }
+<span class="nc" id="L111">    }</span>
+
+    @Override
+    public void DesaffecterVoyageursTrain(Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
+<span class="nc" id="L115">        List&lt;Voyage&gt; lesvoyages = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L116">        lesvoyages = voyageRepository.RechercheVoyage(nomGareDepart, nomGareArrivee, heureDepart);</span>
+<span class="nc" id="L117">        System.out.println(&quot;taille&quot; + lesvoyages.size());</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (int i = 0; i &lt; lesvoyages.size(); i++) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">            for (int j = 0; j &lt; lesvoyages.get(i).getMesVoyageurs().size(); j++)</span>
+<span class="nc" id="L121">                lesvoyages.get(i).getMesVoyageurs().remove(j);</span>
+<span class="nc" id="L122">            lesvoyages.get(i).getTrain().setNbPlaceLibre(lesvoyages.get(i).getTrain().getNbPlaceLibre() + 1);</span>
+<span class="nc" id="L123">            lesvoyages.get(i).getTrain().setEtat(etatTrain.prevu);</span>
+<span class="nc" id="L124">            voyageRepository.save(lesvoyages.get(i));</span>
+<span class="nc" id="L125">            trainRepository.save(lesvoyages.get(i).getTrain());</span>
+        }
+<span class="nc" id="L127">    }</span>
+
+    @Scheduled(fixedRate = 2000)
+    public void TrainsEnGare() {
+<span class="nc" id="L131">        List&lt;Voyage&gt; lesvoyages = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L132">        lesvoyages = (List&lt;Voyage&gt;) voyageRepository.findAll();</span>
+<span class="nc" id="L133">        System.out.println(&quot;taille&quot; + lesvoyages.size());</span>
+
+<span class="nc" id="L135">        Date date = new Date();</span>
+<span class="nc" id="L136">        SimpleDateFormat formatter = new SimpleDateFormat(&quot;dd/MM/yyyy&quot;);</span>
+<span class="nc" id="L137">        System.out.println(&quot;In Schedular After Try&quot;);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        for (int i = 0; i &lt; lesvoyages.size(); i++) {</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            if (lesvoyages.get(i).getDateArrivee().before(date)) {</span>
+<span class="nc" id="L140">                System.out.println(&quot;les trains sont &quot; + lesvoyages.get(i).getTrain().getCodeTrain());</span>
+            }
+            else{
+
+            }
+        }
+<span class="nc" id="L146">    }</span>
+
+
+}
+
+    
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
