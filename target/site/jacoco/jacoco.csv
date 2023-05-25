@@ -2,7 +2,7 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 ExamThourayaS2,tn.esprit.spring.controller,RestControllerVoyageur,60,0,0,0,16,0,9,0,9,0
 ExamThourayaS2,tn.esprit.spring,ExamThourayaS2Application,8,0,0,0,3,0,2,0,2,0
 ExamThourayaS2,tn.esprit.spring.services,TrainServiceImpl,417,0,28,0,57,0,21,0,7,0
-ExamThourayaS2,tn.esprit.spring.services,VoyageServiceImpl,57,0,0,0,15,0,7,0,7,0
+ExamThourayaS2,tn.esprit.spring.services,VoyageServiceImpl,54,3,0,0,14,1,6,1,6,1
 ExamThourayaS2,tn.esprit.spring.services,VoyageurServiceImpl,54,0,2,0,14,0,7,0,6,0
 ExamThourayaS2,tn.esprit.spring.config,PerformanceAspect,30,0,0,0,7,0,3,0,3,0
 ExamThourayaS2,tn.esprit.spring.config,LoggingAspect,39,0,0,0,8,0,4,0,4,0
